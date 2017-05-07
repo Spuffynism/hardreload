@@ -1,5 +1,5 @@
 var reload = function(tab) {
-  chrome.tabs.reload(tab.id, {bypassCache: true});
+	chrome.tabs.reload(tab.id, {bypassCache: true});
 }
 
 // on extension icon click
