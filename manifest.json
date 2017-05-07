@@ -1,0 +1,25 @@
+{
+  "name": "Hard reload",
+  "description": "Adds a hard reload button to the browser.",
+  "version": "1.0",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "commands": {
+  	"hard_reload": {
+  		"suggested_key": {
+  			"default": "Ctrl+Shift+X"
+  		},
+  		"description": "Hard reloads",
+  		"global": true
+  	}
+  },
+  "permissions": [
+    "tabs", "browsingData"
+  ],
+  "browser_action": {
+      "default_title": "Hard reload this page",
+      "default_icon": "hard_reload.png"
+  },
+  "manifest_version": 2
+}
