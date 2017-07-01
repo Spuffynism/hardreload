@@ -1,21 +1,21 @@
 {
   "name": "Hard reload",
-  "description": "Adds a hard reload button to the browser.",
+  "description": "Adds a hard reload button to chrome.",
   "version": "1.0",
   "background": {
     "scripts": ["background.js"]
   },
   "commands": {
-  	"hard_reload": {
+  	"hard-reload": {
   		"suggested_key": {
-  			"default": "Ctrl+Shift+X"
+  			"default": "Alt+R",
+            "mac": "Alt+R"
   		},
-  		"description": "Hard reloads",
-  		"global": true
+  		"description": "Hard reloads"
   	}
   },
   "permissions": [
-    "tabs", "browsingData"
+    "activeTab", "browsingData"
   ],
   "browser_action": {
       "default_title": "Hard reload this page",

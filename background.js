@@ -1,13 +1,40 @@
-var reload = function(tab) {
-	chrome.tabs.reload(tab.id, {bypassCache: true});
-}
+(function () {
+    'use strict';
 
-// on extension icon click
-chrome.browserAction.onClicked.addListener(function(tab) {
-	reload(tab);
-});
+    /**
+     * Reloads a tab by its id, bypassing the cache.
+     *
+     * @param tabId
+     */
+    var reload = function (tabId) {
+        chrome.tabs.reload(tabId, {
+            bypassCache: true
+        });
+    };
 
-// on ctrl+shift+x
-chrome.commands.onCommand.addListener(function(command) {
-	reload(chrome.tabs.getCurrent());
-});
+    /**
+     * Triggered on hard-reload browserAction button click
+     */
+    chrome.browserAction.onClicked.addListener(function (tab) {
+        reload(tab.id);
+    });
+
+    /**
+     * Triggered on hard-reload configured shortcut click
+     */
+    chrome.commands.onCommand.addListener(function (command) {
+        if (command !== 'hard-reload')
+            return;
+
+        // get all active tabs and reload them
+        chrome.tabs.query({
+            active: true
+        }, reloadActiveTabs);
+
+        function reloadActiveTabs(tabs) {
+            tabs.forEach(function (tab) {
+                reload(tab.id);
+            });
+        }
+    });
+})();
