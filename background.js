@@ -1,40 +1,44 @@
-(function () {
+(() => {
     'use strict';
+
+    const HARD_RELOAD_COMMAND = 'hard-reload';
+
+    /**
+     * Triggered on browserAction button click
+     */
+    chrome.browserAction.onClicked.addListener(reloadTab);
+
+    /**
+     * Triggered on configured command activation
+     */
+    chrome.commands.onCommand.addListener((command) => {
+        if (command !== HARD_RELOAD_COMMAND)
+            return;
+
+        chrome.tabs.query({
+            highlighted: true,
+            currentWindow: true
+        }, reloadTabs);
+    });
 
     /**
      * Reloads a tab by its id, bypassing the cache.
      *
-     * @param tabId
+     * @param {Object} tab the tab to reload
      */
-    var reload = function (tabId) {
-        chrome.tabs.reload(tabId, {
+    function reloadTab(tab) {
+        console.log('reload tab', tab);
+        chrome.tabs.reload(tab.id, {
             bypassCache: true
         });
-    };
+    }
 
     /**
-     * Triggered on hard-reload browserAction button click
+     * Reloads tabs
+     *
+     * @param {Object[]} tabs active tabs
      */
-    chrome.browserAction.onClicked.addListener(function (tab) {
-        reload(tab.id);
-    });
-
-    /**
-     * Triggered on hard-reload configured shortcut click
-     */
-    chrome.commands.onCommand.addListener(function (command) {
-        if (command !== 'hard-reload')
-            return;
-
-        // get all active tabs and reload them
-        chrome.tabs.query({
-            active: true
-        }, reloadActiveTabs);
-
-        function reloadActiveTabs(tabs) {
-            tabs.forEach(function (tab) {
-                reload(tab.id);
-            });
-        }
-    });
+    function reloadTabs(tabs) {
+        tabs.forEach(reloadTab)
+    }
 })();
