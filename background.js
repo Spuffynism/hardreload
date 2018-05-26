@@ -27,7 +27,6 @@
      * @param {Object} tab the tab to reload
      */
     function reloadTab(tab) {
-        console.log('reload tab', tab);
         chrome.tabs.reload(tab.id, {
             bypassCache: true
         });
