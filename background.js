@@ -35,9 +35,9 @@
     /**
      * Reloads tabs
      *
-     * @param {Object[]} tabs active tabs
+     * @param {Object[]} tabs tabs to reload
      */
     function reloadTabs(tabs) {
-        tabs.forEach(reloadTab)
+        tabs.forEach(reloadTab);
     }
 })();
